@@ -24,8 +24,11 @@ namespace EventsAPI.Controllers
         [HttpGet("{id:int}/participants")] // GET /events/1/partipants
         public async Task<ActionResult> GetPartipantsForEvent(int id)
         {
-            var savedEvent = await _context.Events.Where(e => e.Id == id).SingleOrDefaultAsync();
-            if (savedEvent == null)
+            var data = await _context.Events
+                                     .Where(e => e.Id == id)
+                                     .Select(e => new { id = e.Id, e.Participants })
+                                     .SingleOrDefaultAsync();
+            if (data == null)
             {
                 return NotFound();
             }
@@ -34,9 +37,7 @@ namespace EventsAPI.Controllers
                 .Where(e => e.Id == id)
                 .Select(e => e.Participants)
                 .ToListAsync();
-
             return Ok(participants); // Bad again!
-
         }
 
 
@@ -70,23 +71,20 @@ namespace EventsAPI.Controllers
             }
         }
 
+
+        [HttpGet("{id:int}", Name = "get-event-by-id")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            return Ok();
+        }
+
+
         [HttpGet]
         
         public async Task<ActionResult> Get([FromQuery] bool showPast = false )
         {
             var details = await _context.Events
                 .Where(e => e.EndDateAndTime.Date > DateTime.Now.Date)
-                .Select(e => new GetEventsResponseItem(e.Id, e.Name, e.StartDateAndTime, e.EndDateAndTime, e.Participants.Count()))
-                    .ToListAsync();
-
-            return Ok(new GetResponse<GetEventsResponseItem>(details));
-        }
-
-        [HttpGet("{id:int}",Name="get-event-by-id")]
-        public async Task<ActionResult> GetById(int id)
-        {
-            var details = await _context.Events
-                .Where(e => e.EndDateAndTime.Date > DateTime.Now.Date && e.Id == id)
                 .Select(e => new GetEventsResponseItem(e.Id, e.Name, e.StartDateAndTime, e.EndDateAndTime, e.Participants.Count()))
                     .ToListAsync();
 
