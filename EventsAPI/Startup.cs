@@ -29,7 +29,7 @@ namespace EventsAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient<ILookupEmployees>();
+            services.AddHttpClient<ILookupEmployees, HttpEmployeeLookup>();
             services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.IgnoreNullValues = true;
@@ -45,7 +45,9 @@ namespace EventsAPI
                 options.UseSqlServer(Configuration.GetConnectionString("events"));
             });
 
-            services.Configure<ApiOptions>(Configuration.GetSection(ApiOptions.Section));
+            services.Configure<ApiOptions>(
+                Configuration.GetSection(ApiOptions.Section)
+                ); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

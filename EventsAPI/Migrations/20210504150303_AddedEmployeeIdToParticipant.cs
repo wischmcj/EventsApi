@@ -2,15 +2,16 @@
 
 namespace EventsAPI.Migrations
 {
-    public partial class AddEmpIdtoParticipant2 : Migration
+    public partial class AddedEmployeeIdToParticipant : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AddColumn<int>(
                 name: "EmployeeId",
                 table: "EventParticipant",
-                type: "nvarchar(max)",
-                nullable: true);
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -8,6 +8,7 @@ namespace EventsAPI.Data
 {
     public class EventsDataContext : DbContext
     {
+
         public EventsDataContext(DbContextOptions<EventsDataContext> options): base(options)
         {
 
@@ -15,7 +16,6 @@ namespace EventsAPI.Data
 
         public DbSet<Event> Events { get; set; }
 
-
+        
     }
-
 }

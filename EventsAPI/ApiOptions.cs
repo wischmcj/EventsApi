@@ -8,6 +8,6 @@ namespace EventsAPI
     public class ApiOptions
     {
         public static readonly string Section = "urls";
-        public string EmployeeApiUrl { get; set; }            
+        public string EmployeeApiUrl { get; set; }
     }
 }

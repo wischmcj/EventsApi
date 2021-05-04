@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventsAPI.Migrations
 {
     [DbContext(typeof(EventsDataContext))]
-    [Migration("20210504150725_AddEmpIdtoParticipant2")]
-    partial class AddEmpIdtoParticipant2
+    [Migration("20210504150303_AddedEmployeeIdToParticipant")]
+    partial class AddedEmployeeIdToParticipant
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,11 +55,11 @@ namespace EventsAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email")
+                    b.Property<string>("EMail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("EventId")
                         .HasColumnType("int");

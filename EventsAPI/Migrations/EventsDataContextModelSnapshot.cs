@@ -53,10 +53,10 @@ namespace EventsAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email")
+                    b.Property<string>("EMail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EmployeeId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("EventId")
@@ -82,10 +82,13 @@ namespace EventsAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email")
+                    b.Property<string>("EMail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventId")
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -118,9 +121,7 @@ namespace EventsAPI.Migrations
                 {
                     b.HasOne("EventsAPI.Data.Event", null)
                         .WithMany("Registrations")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("EventsAPI.Data.Event", b =>

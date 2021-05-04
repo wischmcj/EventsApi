@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventsAPI.Controllers
 {
-    public class EventRegistrationsController : ControllerBase
+    public class EventRegistrationsController :ControllerBase
     {
         private readonly EventsDataContext _context;
 
@@ -25,7 +25,7 @@ namespace EventsAPI.Controllers
         {
             // check to see if there is an event with that id.
             var savedEvent = await _context.Events.SingleOrDefaultAsync(e => e.Id == eventId);
-            if (savedEvent == null)
+            if(savedEvent == null)
             {
                 return NotFound();
             }
@@ -34,7 +34,7 @@ namespace EventsAPI.Controllers
             {
                 EmployeeId = request.Id,
                 Name = request.FirstName + " " + request.LastName,
-                Email = request.Email,
+                EMail = request.Email,
                 Phone = request.Phone,
                 Status = EventRegistrationStatus.Pending
             };
@@ -45,30 +45,29 @@ namespace EventsAPI.Controllers
             // which will say status "pending".
 
 
-            return CreatedAtRoute("get-event-reservation",
+            return CreatedAtRoute("get-event-reservation", 
                 new { eventId = savedEvent.Id, registrationId = registration.Id },
                 registration);
         }
 
 
-        [HttpGet("events/{eventId:int}/registrations/{registrationId:int}", Name = "get-event-reservation")]
+        [HttpGet("events/{eventId:int}/registrations/{registrationId:int}", Name ="get-event-reservation")]
         public async Task<ActionResult> LookupRegistration(int eventId, int registrationId)
         {
             var response = await _context.Events
                  .Where(e => e.Id == eventId)
                  .Select(e => e.Registrations.Where(r => r.Id == registrationId)).SingleOrDefaultAsync();
 
-            if (response == null)
+            if(response == null)
             {
                 return NotFound();
-            }
-            else
+            } else
             {
                 return Ok(response.First());
             }
-
+                 
         }
-
+      
 
         // Todo: How do we see all of them?
 
