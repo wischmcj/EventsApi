@@ -8,6 +8,13 @@ namespace EventsAPI.Data
 {
     public class EventsDataContext : DbContext
     {
+        public EventsDataContext(DbContextOptions<EventsDataContext> options): base(options)
+        {
+
+        }
+
+        public DbSet<Event> Events { get; set; }
 
     }
+
 }
