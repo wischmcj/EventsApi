@@ -15,11 +15,14 @@ namespace EventsAPI.Data
        
         public DateTime EndDateAndTime { get; set; }
         public IList<EventParticipant> Participants { get; set; }
+
+        public IList<EventRegistration> Registrations { get; set; }
     }
     public class EventParticipant
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int? EmployeeId { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
     }

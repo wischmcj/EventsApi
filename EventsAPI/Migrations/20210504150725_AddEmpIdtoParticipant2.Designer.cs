@@ -4,14 +4,16 @@ using EventsAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EventsAPI.Migrations
 {
     [DbContext(typeof(EventsDataContext))]
-    partial class EventsDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210504150725_AddEmpIdtoParticipant2")]
+    partial class AddEmpIdtoParticipant2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,8 +58,8 @@ namespace EventsAPI.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
@@ -75,38 +77,6 @@ namespace EventsAPI.Migrations
                     b.ToTable("EventParticipant");
                 });
 
-            modelBuilder.Entity("EventsAPI.Data.EventRegistration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReasonForDenial")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventRegistration");
-                });
-
             modelBuilder.Entity("EventsAPI.Data.EventParticipant", b =>
                 {
                     b.HasOne("EventsAPI.Data.Event", null)
@@ -114,20 +84,9 @@ namespace EventsAPI.Migrations
                         .HasForeignKey("EventId");
                 });
 
-            modelBuilder.Entity("EventsAPI.Data.EventRegistration", b =>
-                {
-                    b.HasOne("EventsAPI.Data.Event", null)
-                        .WithMany("Registrations")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EventsAPI.Data.Event", b =>
                 {
                     b.Navigation("Participants");
-
-                    b.Navigation("Registrations");
                 });
 #pragma warning restore 612, 618
         }
